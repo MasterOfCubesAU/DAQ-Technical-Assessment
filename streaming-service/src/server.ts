@@ -1,10 +1,10 @@
-import net from 'net';
-import { WebSocket, WebSocketServer } from 'ws';
+import net from "net";
+import { WebSocket, WebSocketServer } from "ws";
 import pino from "pino";
 import prettyPino from "pino-pretty";
 import SonicBoom from "sonic-boom";
 
-const TCP_PORT = parseInt(process.env.TCP_PORT || '12000', 10);
+const TCP_PORT = parseInt(process.env.TCP_PORT || "12000", 10);
 
 const tcpServer = net.createServer();
 const websocketServer = new WebSocketServer({ port: 8080 });
@@ -27,15 +27,15 @@ interface VehicleData {
 
 function batteryExceedLimit(): boolean {
     const currentTime = Date.now();
-    batteryTemperatureWarnings.filter(time => currentTime - time <= BATTERY_WARNING_PERIOD)
-    batteryTemperatureWarnings.push(currentTime)
-    return batteryTemperatureWarnings.length > MAX_BATTERY_WARNINGS
+    batteryTemperatureWarnings.filter(time => currentTime - time <= BATTERY_WARNING_PERIOD);
+    batteryTemperatureWarnings.push(currentTime);
+    return batteryTemperatureWarnings.length > MAX_BATTERY_WARNINGS;
 }
 
-tcpServer.on('connection', (socket) => {
-    console.log('TCP client connected');
+tcpServer.on("connection", (socket) => {
+    console.log("TCP client connected");
 
-    socket.on('data', (msg) => {
+    socket.on("data", (msg) => {
         console.log(msg.toString());
 
         let jsonData: VehicleData | null = null;
@@ -50,7 +50,7 @@ tcpServer.on('connection', (socket) => {
         // Check if temps exceed safe operating range
         if (jsonData && (jsonData.battery_temperature < MIN_OPERATING_RANGE || jsonData.battery_temperature > MAX_OPERATING_RANGE)) {
             if (batteryExceedLimit()) {
-                LOGGER.warn(`Battery exceeded safe operating temperature > ${MAX_BATTERY_WARNINGS} times within ${BATTERY_WARNING_PERIOD}ms`)
+                LOGGER.warn(`Battery exceeded safe operating temperature > ${MAX_BATTERY_WARNINGS} times within ${BATTERY_WARNING_PERIOD}ms`);
             }
         }
 
@@ -61,20 +61,20 @@ tcpServer.on('connection', (socket) => {
         });
     });
 
-    socket.on('end', () => {
-        console.log('Closing connection with the TCP client');
+    socket.on("end", () => {
+        console.log("Closing connection with the TCP client");
     });
 
-    socket.on('error', (err) => {
-        console.log('TCP client error: ', err);
+    socket.on("error", (err) => {
+        console.log("TCP client error: ", err);
     });
 });
 
-websocketServer.on('listening', () => console.log('Websocket server started'));
+websocketServer.on("listening", () => console.log("Websocket server started"));
 
-websocketServer.on('connection', async (ws: WebSocket) => {
-    console.log('Frontend websocket client connected to websocket server');
-    ws.on('error', console.error);
+websocketServer.on("connection", async (ws: WebSocket) => {
+    console.log("Frontend websocket client connected to websocket server");
+    ws.on("error", console.error);
 });
 
 tcpServer.listen(TCP_PORT, () => {
