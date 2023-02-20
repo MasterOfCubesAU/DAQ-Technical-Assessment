@@ -2,8 +2,8 @@ name: "Battery Management CI"
 on: ["push", "pull_request"]
 
 jobs:
-  battery_ui_linting:
-    name: "Battery UI Linting"
+  battery_ui:
+    name: "Battery UI Test & Lint"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,8 +22,10 @@ jobs:
         run: npm ci --include=dev
       - name: Lint
         run: npm run lint
-  data_emulator_linting:
-    name: "Data Emulator Linting"
+      - name: Test
+        run: npm t
+  data_emulator:
+    name: "Data Emulator Test & Lint"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,8 +44,10 @@ jobs:
         run: npm ci --include=dev
       - name: Lint
         run: npm run lint
+      - name: Test
+        run: npm t
   streaming_service_linting:
-    name: "Streaming Service Linting"
+    name: "Streaming Service Test & Lint"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -62,3 +66,5 @@ jobs:
         run: npm ci --include=dev
       - name: Lint
         run: npm run lint
+      - name: Test
+        run: npm t
