@@ -1,0 +1,64 @@
+name: "Battery Management CI"
+on: ["push", "pull_request"]
+
+jobs:
+  battery_ui_linting:
+    name: "Battery UI Linting"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: battery-ui
+    strategy:
+      matrix:
+        node-version: [18.14.0]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci --include=dev
+      - name: Lint
+        run: npm run lint
+  data_emulator_linting:
+    name: "Data Emulator Linting"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: data-emulator
+    strategy:
+      matrix:
+        node-version: [18.14.0]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci --include=dev
+      - name: Lint
+        run: npm run lint
+  streaming_service_linting:
+    name: "Streaming Service Linting"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: streaming-service
+    strategy:
+      matrix:
+        node-version: [18.14.0]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci --include=dev
+      - name: Lint
+        run: npm run lint
