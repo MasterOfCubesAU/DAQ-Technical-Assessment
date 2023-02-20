@@ -5,14 +5,25 @@ interface TemperatureProps {
   temp: number;
 }
 
-function LiveValue({ temp } : TemperatureProps) {
+function LiveValue({ temp }: TemperatureProps) {
 
-  let valueColour = 'white';
+  let valueColour;
+
+  if (temp < 20 || temp > 80) {
+    // Unsafe range
+    valueColour = "red";
+  } else if ((temp >= 20 && temp <= 25) || (temp >= 75 && temp <= 80)) {
+    // Close to unsafe range
+    valueColour = "yellow";
+  } else {
+    // Safe range
+    valueColour = "green";
+  }
 
   return (
-      <header className="live-value" style={{ color : valueColour }}>
-        {`${temp.toString()}°C`}
-      </header>
+    <header className="live-value" style={{ color: valueColour }}>
+      {`${temp.toString()}°C`}
+    </header>
   );
 }
 
