@@ -50,8 +50,6 @@ tcpServer.on('connection', (socket) => {
         // Check if temps exceed safe operating range
         if (jsonData && (jsonData.battery_temperature < MIN_OPERATING_RANGE || jsonData.battery_temperature > MAX_OPERATING_RANGE)) {
             if (batteryExceedLimit()) {
-                console.log("log");
-
                 LOGGER.warn(`Battery exceeded safe operating temperature > ${MAX_BATTERY_WARNINGS} times within ${BATTERY_WARNING_PERIOD}ms`)
             }
         }
