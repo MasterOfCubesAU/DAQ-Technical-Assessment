@@ -24,6 +24,13 @@
         "react"
     ],
     "rules": {
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "@typescript-eslint/semi": "off",
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-unused-vars": "error",
+        "eqeqeq": "error"
     }
 }
