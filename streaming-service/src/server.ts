@@ -9,6 +9,7 @@ const TCP_PORT = parseInt(process.env.TCP_PORT || "12000", 10);
 const tcpServer = net.createServer();
 const websocketServer = new WebSocketServer({ port: 8080 });
 
+// Added constants
 const MIN_OPERATING_RANGE = 20;
 const MAX_OPERATING_RANGE = 80;
 
@@ -25,6 +26,10 @@ interface VehicleData {
     timestamp: number
 }
 
+/**
+ * Given the defined constants, determine if our logging condition is met (>3 unsafe readings within 5 seconds)
+ * @returns {boolean}
+ */
 function batteryExceedLimit(): boolean {
     const currentTime = Date.now();
     batteryTemperatureWarnings.filter(time => currentTime - time <= BATTERY_WARNING_PERIOD);
