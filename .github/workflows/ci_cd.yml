@@ -42,7 +42,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./battery-ui
-          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/battery-ui:latest
   data_emulator:
@@ -85,7 +84,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./data-emulator
-          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/data-emulator:latest
   streaming_service:
@@ -128,6 +126,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./streaming-service
-          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/streaming-service:latest
