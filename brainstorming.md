@@ -31,3 +31,10 @@
     Following the provided resources, I created a dockerfile to "shape" the container that these processes will live in.
 
     From here, I added an action in the workflow to push these build images to Docker Hub using personal access tokens/repository secrets where necessary.
+
+
+## Conclusion
+
+Should I do this again, I do believe particular optimisations could work in my favour. 
+
+Although my docker build times are reasonably quick, I could look into using a smaller base image like `node alpine` to speed up build times.
